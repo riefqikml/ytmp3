@@ -35,4 +35,4 @@ python3 main.py
 
 **Enter the YouTube Video URL**
 
-When prompted, paste the YouTube video URL you want to download and convert without.
+When prompted, paste the YouTube video URL you want to download.
