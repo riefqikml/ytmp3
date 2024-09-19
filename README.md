@@ -5,6 +5,7 @@ This script allows you to download music from YouTube/YTMusic by copying the sha
 ## Requirements
 
 - Python 3.12+
+- `python3-venv`
 - `yt-dlp`
 - `ffmpeg`
 
