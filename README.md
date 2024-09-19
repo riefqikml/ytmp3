@@ -1,10 +1,10 @@
-# YouTube Mp3
+# YouTube Mp3 for Linux
 
 This script allows you to download music from YouTube/YTMusic by copying the share link and convert it to MP3 format.
 
 ## Requirements
 
-- Python 3.12+
+- `Python 3.12+`
 - `python3-venv`
 - `yt-dlp`
 - `ffmpeg`
@@ -36,4 +36,4 @@ python3 main.py
 
 **Enter the YouTube Video URL**
 
-When prompted, paste the YouTube video URL you want to download.
+When prompted, paste the YouTube video URL you want to download. The mp3 will automatically saved at ~/Music directory.
