@@ -4,6 +4,7 @@ import shlex
 import subprocess
 import yt_dlp
 import glob
+import sys
 
 def sanitize_title(title):
     # Replace problematic characters with an underscore or remove them
@@ -39,7 +40,7 @@ def download_and_convert(url):
     with yt_dlp.YoutubeDL(download_opts) as ydl:
         ydl.download([url])
 
-    # Step 3: Find the downloaded file (in case it's not mp4)
+    # Step 3: Find the downloaded file (including .webm format)
     downloaded_files = glob.glob(f"{sanitized_title}.*")
     if not downloaded_files:
         print(f"Error: Could not find the downloaded video file for {sanitized_title}")
@@ -47,22 +48,28 @@ def download_and_convert(url):
     input_file = downloaded_files[0]  # First matching file
     print(f"Downloaded file: {input_file}")
 
-    # Step 4: Set the output file path to the ~/Music directory
-    music_directory = os.path.expanduser("~/Music")
+    # Step 4: Set the output file path to the Music directory for Windows
+    home_directory = os.path.expanduser("~")
+    music_directory = os.path.join(home_directory, "Music")
     if not os.path.exists(music_directory):
         os.makedirs(music_directory)
     output_file = os.path.join(music_directory, f"{sanitized_title}.mp3")
 
     print(f"Converting {input_file} to MP3 as {output_file}...")
 
-    # Use shlex.quote to handle filenames with spaces or special characters
-    ffmpeg_command = f'ffmpeg -i {shlex.quote(input_file)} -q:a 0 -map a {shlex.quote(output_file)}'
+    # On Windows, avoid using shlex.quote and just pass paths directly
+    # Use shlex.quote to handle filenames with spaces or special characters - POSIX
+    # Check if user is on Windows or Linux
+    if sys.platform.startswith('win32'):
+        ffmpeg_command = f'ffmpeg -i "{input_file}" -q:a 0 -map a "{output_file}"'       
+    elif sys.platform.startswith('linux'):
+        ffmpeg_command = f'ffmpeg -i {shlex.quote(input_file)} -q:a 0 -map a {shlex.quote(output_file)}'
 
     try:
         subprocess.run(ffmpeg_command, shell=True, check=True)
         print(f"Conversion complete. The MP3 file is saved as '{output_file}'.")
-    except subprocess.CalledProcessError:
-        print("Error: Failed to convert video to MP3.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error: Failed to convert video to MP3. {e}")
         return
 
     # Optional: Clean up the downloaded video file after conversion

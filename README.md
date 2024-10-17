@@ -1,10 +1,10 @@
-# YouTube Mp3 for Linux
+# Convert YouTube to Mp3 for Linux/Windows
 
 This script allows you to download music from YouTube/YTMusic by copying the share link and convert it to MP3 format.
 
-## Requirements
+## Global Requirements
 
-- `Python 3.12+`
+- `Python 3.11+`
 - `python3-venv`
 - `yt-dlp`
 - `ffmpeg`
@@ -22,7 +22,7 @@ cd ytmp3
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate || .\venv\Script\activate.ps1 # For Windows Powershell
 pip install -r requirements.txt
 ```
 
