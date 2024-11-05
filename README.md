@@ -2,11 +2,11 @@
 
 This script allows you to download music from YouTube/YTMusic by copying the share link and convert it to MP3 format.
 
-## Global Requirements
+## System Dependencies for Linux/Windows
 
 - `Python 3.11+`
-- `python3-venv`
-- `yt-dlp`
+- `python3-venv` \*pre-installed with Python on Windows
+- `yt-dlp` \*not necessary for Windows
 - `ffmpeg`
 
 ## Installation
